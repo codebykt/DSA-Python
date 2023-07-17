@@ -2,28 +2,36 @@ class Node:
     def __init__(self,data):
         self.data = data
         self.next = None
+        self.minval = data
 class Stack:
     def __init__(self):
         self.top = None
     def push(self,value):
-        # print(f'pushed {value} to stack')
+        newNode = Node(value)
         if self.top is None:
-            self.top = Node(value)
+            self.top = newNode
         else:
-            newNode = Node(value)
+            newNode.minval = min(self.top.minval,value)
             newNode.next = self.top
             self.top = newNode
-        # self.display()
+        
+    def getmin(self):
+        if self.top is None:
+            raise Exception("Stack Empty")
+        else:
+            return self.top.minval
+        
+    def top(self):
+        if self.top is None:
+            raise Exception("Stack Empty")
+        return self.top.data
 
     def pop(self):
-        # print("called pop")
         if self.top is None:
             print("stack empty")
             return
         temp = self.top
-        # print(f'popped {temp.data} from the stack')
         self.top = temp.next
-        # self.display()
         return temp.data
 
     def getlen(self):
@@ -48,11 +56,12 @@ class Stack:
                 print(temp.data)
                 temp = temp.next
 
-# s = Stack()
-# s.push(10)
-# s.push(20)
-# s.push(30)
 
-# s.pop()
+s = Stack()
+s.push(10)
+s.push(50)
+s.push(1)
+s.push(12)
 
-# print("Stack length is: ",s.getlen())
+s.display()
+print("min value : ",s.getmin())
